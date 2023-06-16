@@ -19,6 +19,7 @@ I tried to solve this by doing the following:
 - Each receiver action (turnOn, switchColor, ...) returns a bool to represent a success/failure.
 - Each command stores an internal state `_hasExecuted` that updates whenever `Execute()` is called.
 - The history stores *copies* of commands instead of references to the commands passed to the Invoker, since each command has its own internal state.
+
 The solution works but looks a little unintuitive and impractical. I could not find a way to implement MacroCommands (group of multiple commands) with this architecture either. 
 The main problem is that within a MacroCommand, it is possible that some commands `Execute()` while others do not.
 Undoing such a MacroCommand seemed tricky since it would have to keep track of the indivudual state of each sub-command. 
