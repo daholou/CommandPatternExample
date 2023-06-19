@@ -22,12 +22,12 @@ I tried to solve this by doing the following:
 
 The solution works but looks a little unintuitive and impractical. I could not find a way to implement MacroCommands (group of multiple commands) with this architecture either. 
 The main problem is that within a MacroCommand, it is possible that some commands `Execute()` while others do not.
-Undoing such a MacroCommand seemed tricky since it would have to keep track of the indivudual state of each sub-command. 
+Undoing such a MacroCommand seemed tricky since it would have to keep track of the individual state of each sub-command. 
 It gets worse if we think about MacroCommands made of smaller MacroCommands...
 
 
 ## CommandPatternExample2
-Here we work with an Invoker with a data structure of `ICommand`s do not diverge from the default pattern. We still have a `CommandHistory` to Undo and Redo.
+Here we work with an Invoker with a data structure of `ICommand`s that do not diverge from the default pattern. We still have a `CommandHistory` to Undo and Redo.
 
 We have `Lamp` and `RotatingArm` Receivers (I was short on inspiration ;)) with a bunch of actions, but this time *all actions are reversible*:
 - A `Lamp` can be toggled ON/OFF
@@ -37,4 +37,4 @@ We have `Lamp` and `RotatingArm` Receivers (I was short on inspiration ;)) with 
 - A `RotatingArm` can move its hand along its length (at max length, it resets to 0)
 
 This time the history simply stores references to the commands passed to the Invoker, which feels better. A command encapsulates its target receiver, but has no other internal state.
-With this simpler setup I was able to define `MacroCommand`s that are also `ICommand`s, thus allowing us to use composed commands.
+With this simpler setup I was able to define `MacroCommand`s that are also `ICommand`s, thus allowing command composition.
